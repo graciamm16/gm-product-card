@@ -1,4 +1,3 @@
-import { JSX } from "react";
 import { Props as ProductCardProp } from '../components/ProductCard';
 import {Props as ProductTitleProps} from '../components/ProductTitle';
 import {Props as ProductImageProps} from '../components/ProductImage';
