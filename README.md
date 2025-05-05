@@ -1,40 +1,33 @@
-# JB-Product-Card
-Este es un paquete de pruebas de despliegue en NPM
+# GM-Product-Card
 
-### Jordi Beltran
+Esto es un paquete de pruebas de despliegue en NPM
 
-## Ejemplo
+###Gracia Martin
+
+##Ejemplo
 ```
-import {ProductCard, ProductImage, ProductTitle, ProductButtons} from 'jb-product-card'
+import {ProductCard, ProductImage, ProductTitle, ProductButtons} from gm-product-card
 ```
 
 ```
-<ProductCard 
-  product={product}
-  key={product.id}
+ <ProductCard
+        product={product}
+        initialValues={{
+            count: 4,
+            maxCount: 10
+        }}
+        >
+            {
+                ({reset, count, increaseBy, isMaxCountReached, maxCount})=>(
 
-  // Patrón StateInitializer
-  initialValues={{
-      count: 4,
-      maxCount: 10
-  }}
->
-  {
-      ({reset, count, increaseBy, isMaxCountReached, maxCount}) => (
-        <>
-          <ProductCard.Image/>
-          <ProductCard.Title/>
-          <ProductCard.Buttons/>
-
-          {/* <button onClick={reset}>Reset</button> */}
-          {/* <button onClick={()=>increaseBy(-2)}>-2</button> */}
-          {/* Si no se llega al isMaxCount, ocultar */}
-          {/* {!isMaxCountReached && <button onClick={()=>increaseBy(+2)} >+2</button>} */}
-          
-          
-          {/* <span>{count} - {maxCount}</span> */}
-        </>
-      )
-  }
-</ProductCard>
+                    <>
+                        <ProductImage />
+                        <ProductTitle />
+                        <ProductButtons />
+                        
+                    </>
+                )
+            }
+           
+        </ProductCard>
 ```

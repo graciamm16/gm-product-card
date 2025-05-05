@@ -1,54 +1,56 @@
 import { useEffect, useRef, useState } from "react";
-import { InitialValues, onChangeArgs, Product } from '../interfaces/interfaces';
+import { onChangeArg, Product, InitialValues } from '../interfaces/interfaces';
+
 
 interface useProductArgs {
-    product: Product;
-    onChange?: (args: onChangeArgs) => void;
-    value?: number;
-    initialValues?: InitialValues
+   product: Product;
+   onChange?: ( args: onChangeArg ) => void;
+   value?: number;
+   initialValues?: InitialValues,
 }
 
-export const useProduct = ({onChange, product, value = 0, initialValues}: useProductArgs) => {
 
-    const [counter, setCounter] = useState<number>(initialValues?.count || value);
-    const isMounted = useRef(false);
-    console.log(isMounted.current)
-    console.log(initialValues?.count);
-    console.log(initialValues?.maxCount)
+export const useProduct = ({ onChange, product, value = 0, initialValues}: useProductArgs) => {
 
-    const increaseBy = (value: number) => { 
+   const [ counter, setCounter ] = useState<number>( initialValues?.count || value );//Si viene un initialvalue lo utiliza si no usa el value
 
-        let newValue = Math.max(0, counter + value);
-        if (initialValues?.maxCount) {
-            newValue = Math.min(newValue, initialValues.maxCount)
+   const isMounted = useRef(false)
+
+   const increaseBy = ( value: number ) => {
+
+       let newValue = Math.max( counter + value, 0 )
+
+       if(initialValues?.maxCount){ //Si existe un initialValues.maxCount
+            newValue = Math.min(newValue, initialValues.maxCount)//Coger valor más pequeño entre newValue o initialValue.maxCount
         }
-        setCounter( newValue );
+       setCounter( newValue );
+       
+       onChange && onChange({ count: newValue, product });
+   }
 
-        onChange && onChange({count: newValue, product}); // Ejecutar si onChange viene
-    }
+   useEffect(() => {
+        if(!isMounted.current) return;
 
-    const reset = () => {
-        setCounter(initialValues?.count || value)
-    }
+        setCounter( value );
+   }, [ value ])
 
-    // Se recomienda que los useEffect esten asignados a una tarea específica
-    // useEffect(() => {
-    //     isMounted.current = true; // Cuando el componente sea utilizado, marcamos el isMounted como true
-    // }, [])
+   const reset = () => {
+    setCounter(initialValues?.count || value)
+   }
+//    useEffect(() => {
+//     isMounted.current = true;
+    
+//     setCounter( value );
+//     }, [])
 
-    useEffect(() => {
-        if (!isMounted.current) return;
+   return {
+       counter,
+       isMaxCountReached: !!initialValues?.count && initialValues.maxCount === counter,
+       maxCount: initialValues?.maxCount,
+       
+       reset,
+       increaseBy,
+   }
 
-        setCounter(value);
-    }, [value])
-
-    return {
-        counter,
-        
-        maxCount: initialValues?.maxCount,
-        isMaxCountReached: !!initialValues?.maxCount && counter === initialValues?.maxCount,
-
-        increaseBy,
-        reset,
-    }
 }
+

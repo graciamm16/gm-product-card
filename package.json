@@ -1,5 +1,10 @@
 {
-    "version": "0.0.1",
+    "version": "1.0.0-rc",
+    "repository": {
+        "url": "https://github.com/graciamm16/gm-product-card",
+        "type": "git"
+    },
+    "homepage": "https://gracia-martin.com",
     "license": "MIT",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
@@ -7,11 +12,6 @@
         "dist",
         "src"
     ],
-    "repository": {
-        "url": "https://github.com/graciamm16/gm-product-card",
-        "type": "git"
-    },
-    "homepage": "https://gracia-martin.com",
     "engines": {
         "node": ">=10"
     },
@@ -40,7 +40,7 @@
         "trailingComma": "es5"
     },
     "name": "gm-product-card",
-    "author": "Gracia Martin",
+    "author": "Gracia",
     "module": "dist/gm-product-card.esm.js",
     "size-limit": [
         {
@@ -53,27 +53,18 @@
         }
     ],
     "devDependencies": {
-        "@babel/preset-env": "^7.27.1",
-        "@babel/preset-react": "^7.27.1",
+        "@rollup/plugin-image": "^3.0.3",
         "@size-limit/preset-small-lib": "^11.2.0",
         "@types/react": "^17.0.85",
         "@types/react-dom": "^17.0.26",
-        "babel-jest": "^29.7.0",
         "husky": "^9.1.7",
-        "jest": "^25.5.4",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
-        "react-test-renderer": "^17.0.1",
+        "rollup-plugin-postcss": "^4.0.2",
         "size-limit": "^11.2.0",
         "tsdx": "^0.14.1",
         "tslib": "^2.8.1",
         "typescript": "^3.9.10"
-    },
-    "dependencies": {
-        "@rollup/plugin-image": "^3.0.3",
-        "@types/react-test-renderer": "^17.0.1",
-        "identity-obj-proxy": "^3.0.0",
-        "rollup-plugin-postcss": "^4.0.2"
     },
     "keywords": [
         "product",
@@ -81,6 +72,15 @@
         "gracia",
         "martin"
     ],
+    "dependencies": {
+        "@babel/preset-env": "^7.27.1",
+        "@babel/preset-react": "^7.27.1",
+        "@types/react-test-renderer": "^17.0.1",
+        "babel-jest": "^29.7.0",
+        "identity-obj-proxy": "^3.0.0",
+        "jest": "^25.5.4",
+        "react-test-renderer": "^17.0.2"
+    },
     "jest": {
         "moduleNameMapper": {
             "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "identity-obj-proxy",
