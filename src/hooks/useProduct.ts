@@ -1,53 +1,54 @@
 import { useEffect, useRef, useState } from "react";
-import { InitialValues, onChangeArgs, Product } from "../interfaces/interfaces";
+import { InitialValues, onChangeArgs, Product } from '../interfaces/interfaces';
 
-interface useProductArgs{
+interface useProductArgs {
     product: Product;
     onChange?: (args: onChangeArgs) => void;
     value?: number;
-    initialValues?: InitialValues;
+    initialValues?: InitialValues
 }
 
-/*
-    Definimos un custom hook (useProduct) que maneja el contador de un producto, permitiendo incrementar o decrementar el contador.
-    Ejecutamos la función onChange cuando el contador cambia y actualizamos el contador cuando su valor inicial (value) cambia.
-*/
-
 export const useProduct = ({onChange, product, value = 0, initialValues}: useProductArgs) => {
+
     const [counter, setCounter] = useState<number>(initialValues?.count || value);
-
     const isMounted = useRef(false);
+    console.log(isMounted.current)
+    console.log(initialValues?.count);
+    console.log(initialValues?.maxCount)
 
-    const increaseBy = (value: number) => {
-        let newValue = Math.max(counter + value, 0);
+    const increaseBy = (value: number) => { 
 
-        if(initialValues?.maxCount){
-            newValue = Math.min(newValue, initialValues.maxCount);
+        let newValue = Math.max(0, counter + value);
+        if (initialValues?.maxCount) {
+            newValue = Math.min(newValue, initialValues.maxCount)
         }
+        setCounter( newValue );
 
-        setCounter(newValue);
-        onChange && onChange({count: newValue, product});       //if(onChange){onChange();}
+        onChange && onChange({count: newValue, product}); // Ejecutar si onChange viene
     }
 
     const reset = () => {
-        setCounter(initialValues?.count || value);
+        setCounter(initialValues?.count || value)
     }
 
+    // Se recomienda que los useEffect esten asignados a una tarea específica
+    // useEffect(() => {
+    //     isMounted.current = true; // Cuando el componente sea utilizado, marcamos el isMounted como true
+    // }, [])
+
     useEffect(() => {
-        if(!isMounted.current) return;
+        if (!isMounted.current) return;
+
         setCounter(value);
     }, [value])
 
-    // useEffect(() => {
-    //     isMounted.current = true;
-    // }, [])
-    
-    
-    return{
+    return {
         counter,
+        
+        maxCount: initialValues?.maxCount,
+        isMaxCountReached: !!initialValues?.maxCount && counter === initialValues?.maxCount,
+
         increaseBy,
         reset,
-        isMaxCountReached: !!initialValues?.count && initialValues.maxCount === counter,
-        maxCount: initialValues?.maxCount,
     }
 }
