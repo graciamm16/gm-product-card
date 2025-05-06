@@ -5,11 +5,9 @@ import React, { createContext, CSSProperties, JSX } from 'react';
 import { InitialValues, onChangeArg, Product, ProductCardHandlers, ProductContextProps } from '../interfaces/interfaces';
 
 
-
-
 export const ProductContext = createContext({} as  ProductContextProps);//Creación de un contexto con las propiedades establecidades en ProductContextProps
-const {Provider} = ProductContext
 
+const {Provider} = ProductContext
 
 export interface Props {
     product: Product;
@@ -25,19 +23,14 @@ export interface Props {
 //Definimos un componente funcional ProductCard que recibe product como una prop.
 //Obligamos al componente que simepre le tiene que enviar un producto 
 export const ProductCard = ({children, product, className, style, value, onChange, initialValues}:Props) => { 
-
  const {counter, increaseBy, maxCount, isMaxCountReached, reset} = useProduct({ onChange, product, value, initialValues});//Hook con la lógica de useState para incrementar y decrementar
 
-
   return (
-   
         <Provider value={{ // Porveedor para los componenegtes hijos de ProductCard
             counter,
             increaseBy,
             maxCount,
             product,
-            
-
         }}>
             <div className={`${styles.productCard} ${className}`} style={style}>
                 {children({
@@ -55,11 +48,6 @@ export const ProductCard = ({children, product, className, style, value, onChang
                 <ProductTitle title={product.title}/>
 
                 <ProductButtons counter={counter} increaseBy={increaseBy}/> */}
-
-        
-        
-
-        
             </div>
         </Provider>
   )
